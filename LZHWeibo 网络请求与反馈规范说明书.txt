@@ -1,0 +1,241 @@
+LZHWeibo 网络请求与反馈规范说明书
+
+1.按照时间从新到旧查看微博池中的微博
+	请求头:checkByTime?userID=[用户id]&time=[时间]&check=[验证码]&requestNumber=[请求微博数]
+	反馈:
+			{
+				request='checkByTime',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								responseNumber=[实际反馈的微博数目],
+								weiboList=
+								{
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]},
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]},
+									...,
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]}
+								}
+							}
+			}
+
+2.按照点赞数目多从到少查看微博池中的微博
+	请求头:checkByAgreement?userID=[用户id]&time=[时间]&check=[验证码]&requestNumber=[请求微博数]
+	反馈:
+			{
+				request='checkByAgreement',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								responseNumber=[实际反馈的微博数目],
+								weiboList=
+								{
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]},
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]},
+									...,
+									{userID=[用户 id],username=[用户名],weiboTime=[微博发送时间],weiboDetail=[微博详情],commentNumber=[评论数],agreeNumber=[点赞数], weiboID=[微博 ID]}
+								}
+							}
+			}
+
+
+3.发布新微博
+	请求头:publishNewWeibo?userID=[用户id]&time=[时间]&check=[验证码]&detail=[微博详情]
+	反馈:
+			{
+				request='publishNewWeibo',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[微博ID]
+							}
+			}	
+
+
+4.点赞
+	请求头:agreeWeibo?userID=[用户id]&time=[时间]&check=[验证码]&weiboID=[微博编号]
+	反馈:
+			{
+				request='agreeWeibo',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[微博ID],
+								numberOfAgreement=[该条微博的点赞数]
+							}
+			}	
+
+
+5.评论
+	请求头:commentWeibo?userID=[用户id]&time=[时间]&check=[验证码]&weiboID=[微博编号]&commentDetail=[评论详情]
+	反馈:
+			{
+				request='commentWeibo',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[微博ID],
+								numberOfComments=[该条微博的评论数]
+							}
+			}
+
+
+6.查看评论
+	请求头: checkComments?userID=[用户id]&time=[时间]&check=[验证码]&weiboID=[微博编号]
+	反馈:
+			{
+				request='checkComments',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[微博ID],
+								responseNumber=[该条微博的评论数],
+								commentsList=
+												{
+													{userID=[用户 id],username=[用户名], weiboID=[微博 ID],commentDetail=[评论详情], commentTime=[评论时间]},
+													{userID=[用户 id],username=[用户名], weiboID=[微博 ID],commentDetail=[评论详情], commentTime=[评论时间]},
+													......,
+													{userID=[用户 id],username=[用户名], weiboID=[微博 ID],commentDetail=[评论详情], commentTime=[评论时间]}
+												}
+							}
+			}
+
+
+7.删除微博
+	请求头:deleteWeibo?userID=[用户id]&time=[时间]&check=[验证码]&weiboID=[微博编号]
+	反馈:
+			{
+				request='deleteWeibo',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[被删除微博的ID]
+							}
+			}
+
+
+8.删除评论
+	请求头:deleteComment?userID=[用户id]&time=[时间]&check=[验证码]&commentID=[评论编号]&weiboID=[微博ID]
+	反馈:
+			{
+				request='deleteComment',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								commentID=[被删除评论的ID]
+							}
+			}
+
+9.删除点赞
+	请求头:disagreeWeibo?userID=[用户id]&time=[时间]&check=[验证码]&weiboID=[微博编号]
+	反馈:
+			{
+				request='disagreeWeibo',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								weiboID=[被删除微博的ID]
+							}
+			}
+
+
+##############################################################################################################
+
+01.注册
+	请求头:enroll?username=[用户名]&passwd=[密码MD5]&time=[时间]&check=[验证码]&sexual=[性别]&introduction=[用户简介]&email=[用户邮箱]
+	反馈:
+			{
+				request='enroll',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								username=[用户名],
+								userID=[用户 id],
+								user_enroll_time=[用户注册时间],
+								user_sexual=[用户性别], 
+								user_introduction=[用户简介],
+								user_email=[用户邮箱]
+							}
+			}
+
+
+
+02.登陆
+	请求头:login?loginString=[登陆请求字符串,可能是用户名也可能是用户id]&passwd=[密码 MD5]&time=[时间]&check=[验证码]
+	反馈:	
+			{
+				request='login',
+				time=[时间],
+				check=[验证码],
+				response=
+							{
+								isSuccess=[TRUE/FALSE],
+								username=[用户名],
+								userID=[用户 id],
+								user_enroll_time=[用户注册时间],
+								user_sexual=[用户性别], 
+								user_introduction=[用户简介],
+								user_email=[用户邮箱]
+							}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
